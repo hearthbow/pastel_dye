@@ -19,7 +19,6 @@ pastel_dye.dyes = {
 	{"red", "Pastel Red"},
 }
 
--- register dem items
 for _, row in ipairs(pastel_dye.dyes) do
 	local name = row[1]
 	local description = row[2]
@@ -29,8 +28,7 @@ for _, row in ipairs(pastel_dye.dyes) do
 
 	-- color group
 	groups["color_" .. name] = 1
-
--- base colours and all, groups...
+.
 	local base_color_group = {
 		pink = "pink",
 		orange = "orange",
@@ -46,7 +44,7 @@ for _, row in ipairs(pastel_dye.dyes) do
 	if base_color_group[name] then
 		groups["color_" .. base_color_group[name]] = 1
 	end
-
+-- register items
 	minetest.register_craftitem("pastel_dye:" .. name, {
 		description = S(description .. " Dye"),
 		inventory_image = "pastel_dye_" .. name .. ".png",
@@ -98,7 +96,7 @@ for _, mix in ipairs(pastel_mix_recipes) do
 	})
 end
 
--- Give the people options!! While being a bad coder
+-- craft lightpink with one OG dye and one pastel dye
 local pastel_mix_recipes = {
 	{"pink", "white", "lightpink"},
 }
