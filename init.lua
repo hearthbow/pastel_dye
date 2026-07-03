@@ -1,114 +1,67 @@
--- pastel_dye/init.lua
+-- translator support
+local S = core.get_translator("pastel_dye")
 
-pastel_dye = {}
-
--- Translator support
-local S = minetest.get_translator("pastel_dye")
-
--- Define pastel dyes
-pastel_dye.dyes = {
-	{"pink", "Pastel Pink"},
-	{"lightpink", "Pastel Light Pink"},
-	{"orange", "Pastel Orange"},
-	{"purple", "Pastel Purple"},
-	{"yellow", "Pastel Yellow"},
-	{"blue", "Pastel Blue"},
-	{"olivegreen", "Pastel Olive Green"},
-	{"mintgreen", "Pastel Mint Green"},
-	{"cyan", "Pastel Cyan"},
-	{"red", "Pastel Red"},
+local colours = {
+-- name, description
+   {"red", " Pastel Red"},
+   {"orange", "Pastel Orange"},
+   {"yellow", "Pastel Yellow"},
+   {"olivegreen", "Pastel Olive Green"},
+   {"mintgreen", "Pastel Mint Green"},
+   {"cyan", "Pastel Cyan"},
+   {"blue", "Pastel Blue"},
+   {"purple", "Pastel Purple"},
+   {"pink", "Pastel Pink"},
+   {"lightpink", "Pastel Light Pink"},
 }
 
-for _, row in ipairs(pastel_dye.dyes) do
-	local name = row[1]
-	local description = row[2]
 
+--register item
+for _, colour in ipairs(colours) do
 
-	local groups = {dye = 1}
+   core.register_node("pastel_dye:" .. colour[1], {
+   description = colour[2] .. "Dye",
+   inventory_image = "pastel_dye_" .. colour[1] .. ".png",
+   groups = {dye = 1}
+   
+   })
+   
+  end
+-- craft item
 
-	-- color group
-	groups["color_" .. name] = 1
-.
-	local base_color_group = {
-		pink = "pink",
-		orange = "orange",
-		purple = "violet", "purple",
-		yellow = "yellow",
-		blue = "blue",
-		mintgreen = "green",
-		olivegreen = "green",
-		cyan = "cyan", "blue",
-		red = "red",
-	}
-
-	if base_color_group[name] then
-		groups["color_" .. base_color_group[name]] = 1
-	end
--- register items
-	minetest.register_craftitem("pastel_dye:" .. name, {
-		description = S(description .. " Dye"),
-		inventory_image = "pastel_dye_" .. name .. ".png",
-		groups = groups
-	})
-end
-
--- crafting pastels from OG dyes (and one pastel dye...)
-
-local vanilla_to_pastel = {
-	{"pink", "magenta"},
-	{"lightpink", "pink"},
-	{"orange", "orange"},
-	{"purple", "violet"},
-	{"yellow", "yellow"},
-	{"blue", "blue"},
-	{"mintgreen", "green"},
-	{"cyan", "cyan"},
-	{"red", "red"},
+local original_to_pastel = {
+-- {pastel, original} (there are only 9/10, olivegreen will only be crafted with 2 pastel dyes (yellow and mintgreen))
+   {"red", "red"},
+   {"orange", "orange"},
+   {"yellow", "yellow"},
+   {"mintgreen", "green"},
+   {"cyan", "cyan"},
+   {"blue", "blue"},
+   {"purple", "violet"},
+   {"pink", "magenta"},
+   {"lightpink", "pink"},
 }
+for _, colour in ipairs(original_to_pastel) do
 
-for _, row in ipairs(vanilla_to_pastel) do
-	local pastel = row[1]
-	local normal = row[2]
-
-	minetest.register_craft({
-		type = "shapeless",
-		output = "pastel_dye:" .. pastel .. " 2",
-		recipe = {"dye:" .. normal, "dye:white"},
-	})
+   core.register_craft({
+   type = "shapeless",
+   output = "pastel_dye:" .. colour[1] .. " 2",
+   recipe = {"dye:" .. colour[2], "dye:white"},
+  
+})
 end
-    
 
--- pastel dye mixing recipes
-
-local pastel_mix_recipes = {
-	{"mintgreen", "yellow", "olivegreen"},
-	{"red", "blue", "purple"},
+-- mixing colours
+local mix = {
+   {"yellow", "mintgreen", "olivegreen"},
 }
-
-for _, mix in ipairs(pastel_mix_recipes) do
-	minetest.register_craft({
-		type = "shapeless",
-		output = "pastel_dye:" .. mix[3] .. " 2",
-		recipe = {
-			"pastel_dye:" .. mix[1],
-			"pastel_dye:" .. mix[2],
-		},
-	})
+for _, colour in ipairs(mix) do
+   core.register_craft({
+   type = "shapeless",
+   output = "pastel_dye:" .. colour[3],
+   recipe = {"pastel_dye:" .. colour[1], "dye:" .. colour[2]}
+   
+   })
+   
 end
-
--- craft lightpink with one OG dye and one pastel dye
-local pastel_mix_recipes = {
-	{"pink", "white", "lightpink"},
-}
-
-for _, mix in ipairs(pastel_mix_recipes) do
-	minetest.register_craft({
-		type = "shapeless",
-		output = "pastel_dye:" .. mix[3] .. " 2",
-		recipe = {
-			"pastel_dye:" .. mix[1],
-			"dye:" .. mix[2],
-		},
-	})
-end
-
+--this probably didn't need a table...
