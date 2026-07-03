@@ -1,2 +1,2 @@
 # pastel_dye
-New variation of pastel dyes for Minetest/Luanti. Original textures from dye mod. Can be used to create pastel baked clay variations (other mod). 
+Variation of pastel dyes for Minetest/Luanti. Original textures from dye mod. Used to create pastel baked clay variations (pastel_bakedclay mod). 
