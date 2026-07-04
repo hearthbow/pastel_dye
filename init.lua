@@ -18,15 +18,15 @@ local colours = {
 
 --register item
 for _, colour in ipairs(colours) do
-
-   core.register_node("pastel_dye:" .. colour[1], {
-   description = colour[2] .. "Dye",
-   inventory_image = "pastel_dye_" .. colour[1] .. ".png",
-   groups = {dye = 1}
-   
+   core.register_craftitem("pastel_dye:" .. colour[1], {
+     description = colour[2] .. " Dye",
+     inventory_image = "pastel_dye_" .. colour[1] .. ".png",
+     groups = {
+       dye = 1,
+       ["color_" .. colour[1]] = 1,
+     },
    })
-   
-  end
+end
 -- craft item
 
 local original_to_pastel = {
@@ -47,7 +47,7 @@ for _, colour in ipairs(original_to_pastel) do
    type = "shapeless",
    output = "pastel_dye:" .. colour[1] .. " 2",
    recipe = {"dye:" .. colour[2], "dye:white"},
-  
+
 })
 end
 
@@ -60,8 +60,8 @@ for _, colour in ipairs(mix) do
    type = "shapeless",
    output = "pastel_dye:" .. colour[3],
    recipe = {"pastel_dye:" .. colour[1], "dye:" .. colour[2]}
-   
+
    })
-   
+
 end
 --this probably didn't need a table...
