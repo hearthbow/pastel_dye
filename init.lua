@@ -44,8 +44,13 @@ local original_to_pastel = {
 for _, colour in ipairs(original_to_pastel) do
   core.register_craft({
     type = "shapeless",
-    output = "pastel_dye:" .. colour[1] .. " 3",
-    recipe = {"dye:" .. colour[2], "dye:white", "dye:white"},
+    output = "pastel_dye:" .. colour[1] .. " 4",
+    recipe = {
+      "dye:" .. colour[2],
+      "dye:" .. colour[2],
+      "dye:white",
+      "dye:white",
+    },
   })
 end
 
@@ -61,3 +66,19 @@ for _, colour in ipairs(mix) do
   })
 end
 --this probably didn't need a table...
+
+
+-- core.register_on_mods_loaded(function()
+  -- for _, colour in ipairs(colours) do
+      -- local name = "dye:pastel_" .. colour[1]
+      -- local item = core.registered_items[name]
+
+      -- if item then
+          -- core.log("warning", "[pastel_dye] EXISTING ITEM: " .. name)
+          -- core.log("warning", "[pastel_dye] Description: " .. item.description)
+          -- core.log("warning", "[pastel_dye] Image: " .. item.inventory_image)
+      -- else
+          -- core.log("warning", "[pastel_dye] MISSING ITEM: " .. name)
+      -- end
+  -- end
+-- end)
